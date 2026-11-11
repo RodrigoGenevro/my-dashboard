@@ -3,6 +3,7 @@ import Footer from './components/Footer.jsx';
 import Menu from './components/Menu.jsx';
 import SummaryCard from './components/SummaryCard.jsx';
 import Panel from './components/Panel.jsx';
+import InfoRow from './components/InfoRow.jsx';
 
 function App() {
   return (
@@ -34,7 +35,7 @@ function App() {
           title="Filme em destaque"
           className="md:col-span-2"
         >
-          <h3 className="font-heading text-xl font-bold">o livro de Eli</h3>
+          <h3 className="font-heading text-xl font-bold">O livro de Eli</h3>
           <p className="mt-1 text-muted">
             Em um mundo pós-apocalíptico, devastado por uma guerra, Eli
             atravessa terras desoladas carregando um livro misterioso que
@@ -42,6 +43,12 @@ function App() {
             jornada, ele enfrenta perigos e inimigos que querem tomar o livro
             para si, enquanto luta para cumprir sua missão.
           </p>
+          <div className="mt-4 grid gap-x-6 md:grid-cols-2">
+            <InfoRow label="Ano de lançamento" value="2010" />
+            <InfoRow label="Gênero" value="Ação / Ficção científica" />
+            <InfoRow label="Duração" value="1h 58min" />
+            <InfoRow label="Classificação" value="14 anos" />
+          </div>
         </Panel>
 
         <Panel id="list" title="Lista" className="xl:min-h-80">
