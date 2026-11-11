@@ -4,6 +4,7 @@ import Menu from './components/Menu.jsx';
 import SummaryCard from './components/SummaryCard.jsx';
 import Panel from './components/Panel.jsx';
 import InfoRow from './components/InfoRow.jsx';
+import StatusBadge from './components/StatusBadge.jsx';
 
 function App() {
   return (
@@ -35,7 +36,11 @@ function App() {
           title="Filme em destaque"
           className="md:col-span-2"
         >
-          <h3 className="font-heading text-xl font-bold">O livro de Eli</h3>
+          <div className="flex flex-wrap items-center gap-2">
+            <h3 className="font-heading text-xl font-bold"> O Livro de Eli</h3>
+            <StatusBadge label="Assistido" isActive />
+            <StatusBadge label="Favorito" variant="favorite" />
+          </div>
           <p className="mt-1 text-muted">
             Em um mundo pós-apocalíptico, devastado por uma guerra, Eli
             atravessa terras desoladas carregando um livro misterioso que
