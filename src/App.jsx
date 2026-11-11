@@ -19,9 +19,29 @@ function App() {
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             <SummaryCard title="Filmes" value={42} icon="🎥" />
             <SummaryCard title="Horas assistidas" value={318} icon="⏱️" />
-            <SummaryCard title="Filmes favoritos" value={17} icon="🏆" isHighlighted/>
+            <SummaryCard
+              title="Filmes favoritos"
+              value={17}
+              icon="🏆"
+              isHighlighted
+            />
             <SummaryCard title="Nota média" value="8,6" icon="⭐" />
           </div>
+        </Panel>
+
+        <Panel
+          id="highlight"
+          title="Filme em destaque"
+          className="md:col-span-2"
+        >
+          <h3 className="font-heading text-xl font-bold">o livro de Eli</h3>
+          <p className="mt-1 text-muted">
+            Em um mundo pós-apocalíptico, devastado por uma guerra, Eli
+            atravessa terras desoladas carregando um livro misterioso que
+            acredita ser essencial para o futuro da humanidade. Durante sua
+            jornada, ele enfrenta perigos e inimigos que querem tomar o livro
+            para si, enquanto luta para cumprir sua missão.
+          </p>
         </Panel>
 
         <Panel id="list" title="Lista" className="xl:min-h-80">

@@ -19,7 +19,7 @@ function Menu() {
       id="menu"
       aria-label="Menu principal"
       className="rounded-xl border border-border bg-surface p-3
-        md:col-span-2 xl:col-span-1 xl:row-span-2"
+        md:col-span-2 xl:col-span-1 xl:row-span-3"
     >
       <button
         type="button"
@@ -40,6 +40,11 @@ function Menu() {
         <li>
           <a href="#summary" onClick={closeMenu} className={linkClass}>
             Resumo
+          </a>
+        </li>
+        <li>
+          <a href="#highlight" onClick={closeMenu} className={linkClass}>
+            Filme em destaque
           </a>
         </li>
         <li>
