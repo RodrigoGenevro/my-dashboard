@@ -5,6 +5,7 @@ import SummaryCard from './components/SummaryCard.jsx';
 import Panel from './components/Panel.jsx';
 import InfoRow from './components/InfoRow.jsx';
 import StatusBadge from './components/StatusBadge.jsx';
+import DetailsToggle from './components/DetailsToggle.jsx';
 
 function App() {
   return (
@@ -54,6 +55,25 @@ function App() {
             <InfoRow label="Duração" value="1h 58min" />
             <InfoRow label="Classificação" value="14 anos" />
           </div>
+          <DetailsToggle>
+            <p>
+              <strong>Diretor:</strong> Albert Hughes e Allen Hughes
+            </p>
+            <p>
+              <strong>Elenco:</strong> Denzel Washington, Gary Oldman e Mila
+              Kunis
+            </p>
+            <p>
+              <p>
+                <strong>Idioma original:</strong> Inglês
+              </p>
+            </p>
+            <p>
+              <p>
+                <strong>Nota no IMDb:</strong> 6,8/10
+              </p>
+            </p>
+          </DetailsToggle>
         </Panel>
 
         <Panel id="list" title="Lista" className="xl:min-h-80">
