@@ -2,9 +2,7 @@ import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import Menu from './components/Menu.jsx';
 import SummaryCard from './components/SummaryCard.jsx';
-
-const areaClass =
-  'min-h-32 rounded-xl border-2 border-dashed border-border bg-surface p-4 text-muted';
+import Panel from './components/Panel.jsx';
 
 function App() {
   return (
@@ -16,20 +14,23 @@ function App() {
           xl:grid-cols-[15rem_1fr_1fr] xl:p-8"
       >
         <Menu />
-        <section id="summary" className={`${areaClass} md:col-span-2`}>
+
+        <Panel id="summary" title="Resumo" className="md:col-span-2">
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             <SummaryCard title="Filmes" value={42} icon="🎥" />
             <SummaryCard title="Horas assistidas" value={318} icon="⏱️" />
-            <SummaryCard title="Filmes favoritos" value={17} icon="🏆" isHighlighted />
+            <SummaryCard title="Filmes favoritos" value={17} icon="🏆" isHighlighted/>
             <SummaryCard title="Nota média" value="8,6" icon="⭐" />
           </div>
-        </section>
-        <section id="list" className={`${areaClass} xl:min-h-80`}>
-          Lista
-        </section>
-        <section id="chart" className={`${areaClass} xl:min-h-80`}>
-          Gráfico
-        </section>
+        </Panel>
+
+        <Panel id="list" title="Lista" className="xl:min-h-80">
+          <p className="text-muted">Em construção.</p>
+        </Panel>
+
+        <Panel id="chart" title="Gráfico" className="xl:min-h-80">
+          <p className="text-muted">Em construção.</p>
+        </Panel>
       </main>
       <Footer />
     </div>
