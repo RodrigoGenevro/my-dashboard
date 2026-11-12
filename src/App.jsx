@@ -7,6 +7,13 @@ import InfoRow from './components/InfoRow.jsx';
 import StatusBadge from './components/StatusBadge.jsx';
 import DetailsToggle from './components/DetailsToggle.jsx';
 
+const summaryCards = [
+  { id: 'films', title: 'Filmes', value: 42, icon: '🎥' },
+  { id: 'hours', title: 'Horas assistidas', value: 318, icon: '⏱️' },
+  {id: 'favorites',title: 'Filmes favoritos',value: 17,icon: '🏆',isHighlighted: true,},
+  { id: 'rating', title: 'Nota média', value: '8,6', icon: '⭐' },
+];
+
 function App() {
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
@@ -20,15 +27,15 @@ function App() {
 
         <Panel id="summary" title="Resumo" className="md:col-span-2">
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-            <SummaryCard title="Filmes" value={42} icon="🎥" />
-            <SummaryCard title="Horas assistidas" value={318} icon="⏱️" />
-            <SummaryCard
-              title="Filmes favoritos"
-              value={17}
-              icon="🏆"
-              isHighlighted
-            />
-            <SummaryCard title="Nota média" value="8,6" icon="⭐" />
+            {summaryCards.map((card) => (
+              <SummaryCard
+                key={card.id}
+                title={card.title}
+                value={card.value}
+                icon={card.icon}
+                isHighlighted={card.isHighlighted}
+              />
+            ))}
           </div>
         </Panel>
 
