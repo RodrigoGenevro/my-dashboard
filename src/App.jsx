@@ -6,6 +6,7 @@ import Panel from './components/Panel.jsx';
 import InfoRow from './components/InfoRow.jsx';
 import StatusBadge from './components/StatusBadge.jsx';
 import DetailsToggle from './components/DetailsToggle.jsx';
+import ListItem from './components/ListItem.jsx';
 
 const summaryCards = [
   { id: 'films', title: 'Filmes', value: 42, icon: '🎥' },
@@ -136,23 +137,13 @@ function App() {
         <Panel id="list" title="Minha lista de filmes" className="xl:min-h-80">
           <ul>
             {movies.map((movie) => (
-              <li
+              <ListItem
                 key={movie.id}
-                className="flex flex-wrap items-center justify-between gap-2
-                           border-b border-border py-3"
-              >
-                <div>
-                  <p className="font-bold">{movie.title}</p>
-                  <p className="text-sm text-muted">
-                    {movie.year} · {movie.genre}
-                  </p>
-                </div>
-
-                <StatusBadge
-                  label={movie.isWatched ? 'Assistido' : 'Quero assistir'}
-                  isActive={movie.isWatched}
-                />
-              </li>
+                title={movie.title}
+                year={movie.year}
+                genre={movie.genre}
+                isWatched={movie.isWatched}
+              />
             ))}
           </ul>
         </Panel>
