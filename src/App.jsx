@@ -10,10 +10,60 @@ import DetailsToggle from './components/DetailsToggle.jsx';
 const summaryCards = [
   { id: 'films', title: 'Filmes', value: 42, icon: '🎥' },
   { id: 'hours', title: 'Horas assistidas', value: 318, icon: '⏱️' },
-  {id: 'favorites',title: 'Filmes favoritos',value: 17,icon: '🏆',isHighlighted: true,},
+  {
+    id: 'favorites',
+    title: 'Filmes favoritos',
+    value: 17,
+    icon: '🏆',
+    isHighlighted: true,
+  },
   { id: 'rating', title: 'Nota média', value: '8,6', icon: '⭐' },
 ];
 
+const movies = [
+  {
+    id: 'duna-parte-dois',
+    title: 'Duna: Parte Dois',
+    year: 2024,
+    genre: 'Ficção científica',
+    isWatched: false,
+  },
+  {
+    id: 'oppenheimer',
+    title: 'Oppenheimer',
+    year: 2023,
+    genre: 'Drama / História',
+    isWatched: false,
+  },
+  {
+    id: 'gladiador-dois',
+    title: 'Gladiador II',
+    year: 2024,
+    genre: 'Ação / Drama',
+    isWatched: false,
+  },
+  {
+    id: 'interestelar',
+    title: 'Interestelar',
+    year: 2014,
+    genre: 'Ficção científica / Drama',
+    isWatched: true,
+  },
+  {
+    id: 'a-origem',
+    title: 'A Origem',
+    year: 2010,
+    genre: 'Ação / Ficção científica',
+    isWatched: true,
+  },
+  {
+    id: 'clube-da-luta',
+    title: 'Clube da Luta',
+    year: 1999,
+    genre: 'Drama / Suspense',
+    isWatched: true,
+  },
+];
 function App() {
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
@@ -83,8 +133,28 @@ function App() {
           </DetailsToggle>
         </Panel>
 
-        <Panel id="list" title="Lista" className="xl:min-h-80">
-          <p className="text-muted">Em construção.</p>
+        <Panel id="list" title="Minha lista de filmes" className="xl:min-h-80">
+          <ul>
+            {movies.map((movie) => (
+              <li
+                key={movie.id}
+                className="flex flex-wrap items-center justify-between gap-2
+                           border-b border-border py-3"
+              >
+                <div>
+                  <p className="font-bold">{movie.title}</p>
+                  <p className="text-sm text-muted">
+                    {movie.year} · {movie.genre}
+                  </p>
+                </div>
+
+                <StatusBadge
+                  label={movie.isWatched ? 'Assistido' : 'Quero assistir'}
+                  isActive={movie.isWatched}
+                />
+              </li>
+            ))}
+          </ul>
         </Panel>
 
         <Panel id="chart" title="Gráfico" className="xl:min-h-80">
