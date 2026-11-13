@@ -135,17 +135,21 @@ function App() {
         </Panel>
 
         <Panel id="list" title="Minha lista de filmes" className="xl:min-h-80">
-          <ul>
-            {movies.map((movie) => (
-              <ListItem
-                key={movie.id}
-                title={movie.title}
-                year={movie.year}
-                genre={movie.genre}
-                isWatched={movie.isWatched}
-              />
-            ))}
-          </ul>
+          {movies.length === 0 ? (
+            <p className="text-muted">Nenhum filme na lista ainda.</p>
+          ) : (
+            <ul>
+              {movies.map((movie) => (
+                <ListItem
+                  key={movie.id}
+                  title={movie.title}
+                  year={movie.year}
+                  genre={movie.genre}
+                  isWatched={movie.isWatched}
+                />
+              ))}
+            </ul>
+          )}
         </Panel>
 
         <Panel id="chart" title="Gráfico" className="xl:min-h-80">
