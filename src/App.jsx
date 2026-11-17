@@ -75,11 +75,15 @@ const movies = [
 
 function App() {
   const [statusFilter, setStatusFilter] = useState('all');
+  const [search, setSearch] = useState('');
+
+  const searchTerm = search.trim().toLowerCase();
 
   const visibleMovies = movies.filter((movie) => {
-    if (statusFilter === 'watched') return movie.isWatched;
-    if (statusFilter === 'unwatched') return !movie.isWatched;
-    return true;
+    const matchesSearch = movie.title.toLowerCase().includes(searchTerm);
+    if (statusFilter === 'watched') return movie.isWatched && matchesSearch;
+    if (statusFilter === 'unwatched') return !movie.isWatched && matchesSearch;
+    return matchesSearch;
   });
 
   return (
@@ -155,6 +159,23 @@ function App() {
             <p className="text-muted">Nenhum filme na lista ainda.</p>
           ) : (
             <>
+              <label htmlFor="movie-search" className="text-sm text-muted">
+                Buscar pelo nome
+              </label>
+              <input
+                id="movie-search"
+                type="search"
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                placeholder="Ex.: Interestelar"
+                className="mt-1 mb-3 w-full rounded-lg border border-border bg-background
+                px-3 py-2 focus:border-primary focus:outline-none"
+              />
+
+              <p className="mb-2 text-sm text-muted" aria-live="polite">
+                {visibleMovies.length} de {movies.length} filmes
+              </p>
+
               <div className="mb-4 flex flex-wrap gap-2">
                 {filterOptions.map((option) => (
                   <button
@@ -174,9 +195,7 @@ function App() {
               </div>
 
               {visibleMovies.length === 0 ? (
-                <p className="text-muted">
-                  Nenhum filme encontrado neste filtro.
-                </p>
+                <p className="text-muted">Nenhum filme encontrado.</p>
               ) : (
                 <ul>
                   {visibleMovies.map((movie) => (
