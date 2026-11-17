@@ -7,6 +7,13 @@ import InfoRow from './components/InfoRow.jsx';
 import StatusBadge from './components/StatusBadge.jsx';
 import DetailsToggle from './components/DetailsToggle.jsx';
 import ListItem from './components/ListItem.jsx';
+import { useState } from 'react';
+
+const filterOptions = [
+  { id: 'all', label: 'Todos' },
+  { id: 'unwatched', label: 'Para assistir' },
+  { id: 'watched', label: 'Assistidos' },
+];
 
 const summaryCards = [
   { id: 'films', title: 'Filmes', value: 42, icon: '🎥' },
@@ -65,10 +72,20 @@ const movies = [
     isWatched: true,
   },
 ];
+
 function App() {
+  const [statusFilter, setStatusFilter] = useState('all');
+
+  const visibleMovies = movies.filter((movie) => {
+    if (statusFilter === 'watched') return movie.isWatched;
+    if (statusFilter === 'unwatched') return !movie.isWatched;
+    return true;
+  });
+
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Header />
+
       <main
         className="grid flex-1 grid-cols-1 content-start gap-4 p-4
           md:grid-cols-2 md:gap-6 md:p-6
@@ -96,10 +113,11 @@ function App() {
           className="md:col-span-2"
         >
           <div className="flex flex-wrap items-center gap-2">
-            <h3 className="font-heading text-xl font-bold"> O Livro de Eli</h3>
+            <h3 className="font-heading text-xl font-bold">O Livro de Eli</h3>
             <StatusBadge label="Assistido" isActive />
             <StatusBadge label="Favorito" variant="favorite" />
           </div>
+
           <p className="mt-1 text-muted">
             Em um mundo pós-apocalíptico, devastado por uma guerra, Eli
             atravessa terras desoladas carregando um livro misterioso que
@@ -107,12 +125,14 @@ function App() {
             jornada, ele enfrenta perigos e inimigos que querem tomar o livro
             para si, enquanto luta para cumprir sua missão.
           </p>
+
           <div className="mt-4 grid gap-x-6 md:grid-cols-2">
             <InfoRow label="Ano de lançamento" value="2010" />
             <InfoRow label="Gênero" value="Ação / Ficção científica" />
             <InfoRow label="Duração" value="1h 58min" />
             <InfoRow label="Classificação" value="14 anos" />
           </div>
+
           <DetailsToggle>
             <p>
               <strong>Diretor:</strong> Albert Hughes e Allen Hughes
@@ -122,14 +142,10 @@ function App() {
               Kunis
             </p>
             <p>
-              <p>
-                <strong>Idioma original:</strong> Inglês
-              </p>
+              <strong>Idioma original:</strong> Inglês
             </p>
             <p>
-              <p>
-                <strong>Nota no IMDb:</strong> 6,8/10
-              </p>
+              <strong>Nota no IMDb:</strong> 6,8/10
             </p>
           </DetailsToggle>
         </Panel>
@@ -138,17 +154,43 @@ function App() {
           {movies.length === 0 ? (
             <p className="text-muted">Nenhum filme na lista ainda.</p>
           ) : (
-            <ul>
-              {movies.map((movie) => (
-                <ListItem
-                  key={movie.id}
-                  title={movie.title}
-                  year={movie.year}
-                  genre={movie.genre}
-                  isWatched={movie.isWatched}
-                />
-              ))}
-            </ul>
+            <>
+              <div className="mb-4 flex flex-wrap gap-2">
+                {filterOptions.map((option) => (
+                  <button
+                    key={option.id}
+                    type="button"
+                    onClick={() => setStatusFilter(option.id)}
+                    aria-pressed={statusFilter === option.id}
+                    className={
+                      statusFilter === option.id
+                        ? 'rounded-full border border-primary bg-primary px-4 py-2 text-sm font-medium text-background'
+                        : 'rounded-full border border-border px-4 py-2 text-sm font-medium text-muted hover:border-primary'
+                    }
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+
+              {visibleMovies.length === 0 ? (
+                <p className="text-muted">
+                  Nenhum filme encontrado neste filtro.
+                </p>
+              ) : (
+                <ul>
+                  {visibleMovies.map((movie) => (
+                    <ListItem
+                      key={movie.id}
+                      title={movie.title}
+                      year={movie.year}
+                      genre={movie.genre}
+                      isWatched={movie.isWatched}
+                    />
+                  ))}
+                </ul>
+              )}
+            </>
           )}
         </Panel>
 
@@ -156,6 +198,7 @@ function App() {
           <p className="text-muted">Em construção.</p>
         </Panel>
       </main>
+
       <Footer />
     </div>
   );
