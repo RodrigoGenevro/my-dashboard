@@ -13,7 +13,7 @@ function ListItem({ title, year, genre, isWatched, isFavorite }) {
       <div className="flex shrink-0 items-center gap-2">
         <div className="flex w-28 justify-center">
           <StatusBadge
-            label={isWatched ? 'Assistido' : 'Para assistir'}
+            label={isWatched ? 'Assistido' : 'Não assistido'}
             isActive={isWatched}
           />
         </div>

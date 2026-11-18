@@ -60,7 +60,7 @@ function App() {
     },
     {
       id: 'unwatched',
-      title: 'Para assistir',
+      title: 'Não assistidos',
       value: unwatchedCount,
       icon: '🎬',
     },
