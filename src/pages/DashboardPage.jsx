@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import SummaryCard from '../components/SummaryCard.jsx';
 import Panel from '../components/Panel.jsx';
 import InfoRow from '../components/InfoRow.jsx';
 import StatusBadge from '../components/StatusBadge.jsx';
+import ListItem from '../components/ListItem.jsx';
 
 import { movies } from '../data/movies.js';
 
@@ -47,11 +49,16 @@ function DashboardPage() {
   ];
 
   const featuredMovie = movies.find((movie) => movie.id === 'o-livro-de-eli');
+  const firstMovies = movies.slice(0, 3);
 
   return (
-    <div className="flex flex-col gap-6">
+    <>
       {/* Resumo */}
-      <Panel id="summary" title="Resumo da biblioteca">
+      <Panel
+        id="summary"
+        title="Resumo da biblioteca"
+        className="md:col-span-2"
+      >
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {summaryCards.map((card) => (
             <SummaryCard
@@ -66,7 +73,11 @@ function DashboardPage() {
       </Panel>
 
       {/* Filme em destaque */}
-      <Panel id="featured-movie" title="Filme em destaque">
+      <Panel
+        id="highlight"
+        title="Filme em destaque"
+        className="md:col-span-2"
+      >
         {featuredMovie && (
           <div className="flex flex-col gap-4">
             <div className="flex flex-wrap items-center gap-2">
@@ -126,8 +137,35 @@ function DashboardPage() {
         )}
       </Panel>
 
+      {/* Prévia da biblioteca */}
+      <Panel id="list" title="Biblioteca de filmes" className="xl:min-h-80">
+        {firstMovies.length === 0 ? (
+          <p className="text-muted">Nenhum filme cadastrado.</p>
+        ) : (
+          <ul>
+            {firstMovies.map((movie) => (
+              <ListItem
+                key={movie.id}
+                title={movie.title}
+                year={movie.year}
+                genre={movie.genre}
+                isWatched={movie.isWatched}
+                isFavorite={movie.isFavorite}
+              />
+            ))}
+          </ul>
+        )}
+
+        <Link
+          to="/lista"
+          className="mt-4 inline-block font-bold text-primary hover:underline"
+        >
+          Ver todos os {movies.length} filmes →
+        </Link>
+      </Panel>
+
       {/* Estatísticas */}
-      <Panel id="statistics" title="Estatísticas">
+      <Panel id="chart" title="Estatísticas" className="xl:min-h-80">
         <div className="flex flex-col gap-3">
           <InfoRow label="Total de filmes" value={totalMovies} />
           <InfoRow label="Filmes assistidos" value={watchedCount} />
@@ -135,7 +173,7 @@ function DashboardPage() {
           <InfoRow label="Filmes favoritos" value={favoritesCount} />
         </div>
       </Panel>
-    </div>
+    </>
   );
 }
 

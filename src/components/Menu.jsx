@@ -54,7 +54,7 @@ function Menu() {
         </li>
         <li>
           <a href="#chart" onClick={closeMenu} className={linkClass}>
-            Gráfico
+            Estatísticas
           </a>
         </li>
       </ul>

@@ -110,8 +110,11 @@ function LibraryPage() {
   }
 
   return (
-    <div className="flex flex-col gap-6">
-      <Panel id="library" title="Biblioteca de filmes">
+    <Panel
+      id="library"
+      title="Biblioteca de filmes"
+      className="md:col-span-2 xl:row-span-3"
+    >
         {/* Navegação entre catálogo e minha lista */}
         <div className="flex flex-wrap gap-2 border-b border-border pb-4">
           <button
@@ -139,7 +142,11 @@ function LibraryPage() {
 
         {/* Campo de pesquisa */}
         <div className="py-4">
+          <label htmlFor="movie-search" className="sr-only">
+            Buscar filmes por nome ou gênero
+          </label>
           <input
+            id="movie-search"
             type="text"
             value={search}
             onChange={handleSearch}
@@ -153,7 +160,9 @@ function LibraryPage() {
           {filterOptions.map((filter) => (
             <button
               key={filter.id}
+              type="button"
               onClick={() => handleFilter(filter.id)}
+              aria-pressed={statusFilter === filter.id}
               className={`rounded-lg px-3 py-2 text-sm transition ${
                 statusFilter === filter.id
                   ? 'bg-primary text-background'
@@ -164,6 +173,10 @@ function LibraryPage() {
             </button>
           ))}
         </div>
+
+        <p className="mt-3 text-sm text-muted" aria-live="polite">
+          {totalResults} de {movies.length} filmes
+        </p>
 
         {/* Lista de filmes */}
         <div className="mt-4">
@@ -216,7 +229,6 @@ function LibraryPage() {
           </div>
         )}
       </Panel>
-    </div>
   );
 }
 
