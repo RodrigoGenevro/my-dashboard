@@ -51,6 +51,11 @@ function Menu() {
             Meus filmes
           </NavLink>
         </li>
+        <li>
+          <NavLink to="/novo" onClick={closeMenu} className={linkClass}>
+            Novo filme
+          </NavLink>
+        </li>
       </ul>
     </nav>
   );

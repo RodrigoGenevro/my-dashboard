@@ -7,6 +7,7 @@ import Header from './components/Header.jsx';
 import Menu from './components/Menu.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
 import ListPage from './pages/ListPage.jsx';
+import NewItemPage from './pages/NewItemPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Routes>
           <Route path="/" element={<DashboardPage movies={movies} />} />
           <Route path="/lista" element={<ListPage movies={movies} />} />
+          <Route path="/novo" element={<NewItemPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
