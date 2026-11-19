@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Panel from '../components/Panel.jsx';
 
 const inputClass =
   'mt-1 w-full rounded-lg border bg-background px-3 py-2 focus:border-primary focus:outline-none';
 
-function NewItemPage() {
+function NewItemPage({ onAdd }) {
+  const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [genre, setGenre] = useState('');
   const [year, setYear] = useState('');
@@ -43,6 +44,19 @@ function NewItemPage() {
     const newErrors = validate();
     setErrors(newErrors);
     if (newErrors.title || newErrors.genre || newErrors.year) return;
+
+    const newMovie = {
+      id: String(Date.now()),
+      title: title.trim(),
+      genre: genre.trim(),
+      year: Number(year),
+      isWatched,
+      isFavorite,
+      inMyList: true,
+    };
+
+    onAdd(newMovie);
+    navigate('/lista');
   }
 
   return (

@@ -11,7 +11,11 @@ import NewItemPage from './pages/NewItemPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 
 function App() {
-  const [movies] = useState(initialMovies);
+  const [movies, setMovies] = useState(initialMovies);
+
+  function addMovie(newMovie) {
+    setMovies((currentMovies) => [...currentMovies, newMovie]);
+  }
 
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
@@ -27,7 +31,10 @@ function App() {
         <Routes>
           <Route path="/" element={<DashboardPage movies={movies} />} />
           <Route path="/lista" element={<ListPage movies={movies} />} />
-          <Route path="/novo" element={<NewItemPage />} />
+          <Route
+            path="/novo"
+            element={<NewItemPage onAdd={addMovie} />}
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
