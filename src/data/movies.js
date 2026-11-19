@@ -1,4 +1,4 @@
-const movies = [
+export const initialMovies = [
   {
     id: 'interestelar',
     title: 'Interestelar',
@@ -261,5 +261,3 @@ const movies = [
     inMyList: false,
   },
 ];
-
-export { movies };

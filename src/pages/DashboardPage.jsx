@@ -7,9 +7,7 @@ import StatusBadge from '../components/StatusBadge.jsx';
 import DetailsToggle from '../components/DetailsToggle.jsx';
 import ListItem from '../components/ListItem.jsx';
 
-import { movies } from '../data/movies.js';
-
-function DashboardPage() {
+function DashboardPage({ movies }) {
   const totalMovies = movies.length;
 
   const watchedCount = movies.filter((movie) => movie.isWatched).length;

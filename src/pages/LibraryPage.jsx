@@ -3,9 +3,7 @@ import { useState } from 'react';
 import Panel from '../components/Panel.jsx';
 import ListItem from '../components/ListItem.jsx';
 
-import { movies } from '../data/movies.js';
-
-function LibraryPage() {
+function LibraryPage({ movies }) {
   const [statusFilter, setStatusFilter] = useState('all');
   const [search, setSearch] = useState('');
   const [activeList, setActiveList] = useState('catalog');

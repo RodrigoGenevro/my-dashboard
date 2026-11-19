@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
+import { initialMovies } from './data/movies.js';
 import Footer from './components/Footer.jsx';
 import Header from './components/Header.jsx';
 import Menu from './components/Menu.jsx';
@@ -8,6 +10,8 @@ import ListPage from './pages/ListPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 
 function App() {
+  const [movies] = useState(initialMovies);
+
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Header />
@@ -20,8 +24,8 @@ function App() {
         <Menu />
 
         <Routes>
-          <Route path="/" element={<DashboardPage />} />
-          <Route path="/lista" element={<ListPage />} />
+          <Route path="/" element={<DashboardPage movies={movies} />} />
+          <Route path="/lista" element={<ListPage movies={movies} />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
