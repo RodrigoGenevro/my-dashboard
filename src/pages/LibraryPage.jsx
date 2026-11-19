@@ -2,8 +2,11 @@ import { useState } from 'react';
 
 import Panel from '../components/Panel.jsx';
 import ListItem from '../components/ListItem.jsx';
+import { useMovies } from '../context/MoviesContext.js';
 
-function LibraryPage({ movies }) {
+function LibraryPage() {
+  const { movies, resetMovies } = useMovies();
+
   const [statusFilter, setStatusFilter] = useState('all');
   const [search, setSearch] = useState('');
   const [activeList, setActiveList] = useState('catalog');
@@ -88,6 +91,24 @@ function LibraryPage({ movies }) {
     }
   }
 
+  // Restaura os filmes originais
+  function handleResetMovies() {
+    const confirmed = window.confirm(
+      'Tem certeza que deseja restaurar os filmes originais? Todas as alterações serão perdidas.',
+    );
+
+    if (!confirmed) return;
+
+    resetMovies();
+
+    // Reseta os filtros e a paginação
+    setStatusFilter('all');
+    setSearch('');
+    setActiveList('catalog');
+    setCatalogPage(1);
+    setMyListPage(1);
+  }
+
   const currentMovies =
     activeList === 'catalog' ? visibleCatalogMovies : visibleMyMovies;
 
@@ -113,120 +134,131 @@ function LibraryPage({ movies }) {
       title="Biblioteca de filmes"
       className="md:col-span-2 xl:row-span-3"
     >
-        {/* Navegação entre catálogo e minha lista */}
-        <div className="flex flex-wrap gap-2 border-b border-border pb-4">
+      {/* Navegação entre catálogo e minha lista */}
+      <div className="flex flex-wrap gap-2 border-b border-border pb-4">
+        <button
+          onClick={() => handleActiveList('catalog')}
+          className={`rounded-lg px-4 py-2 text-sm font-semibold transition ${
+            activeList === 'catalog'
+              ? 'bg-primary text-background'
+              : 'border border-border text-muted hover:text-foreground'
+          }`}
+        >
+          🎬 Catálogo de filmes
+        </button>
+
+        <button
+          onClick={() => handleActiveList('myList')}
+          className={`rounded-lg px-4 py-2 text-sm font-semibold transition ${
+            activeList === 'myList'
+              ? 'bg-primary text-background'
+              : 'border border-border text-muted hover:text-foreground'
+          }`}
+        >
+          🍿 Minha lista
+        </button>
+      </div>
+
+      {/* Campo de pesquisa */}
+      <div className="py-4">
+        <label htmlFor="movie-search" className="sr-only">
+          Buscar filmes por nome ou gênero
+        </label>
+        <input
+          id="movie-search"
+          type="text"
+          value={search}
+          onChange={handleSearch}
+          placeholder="Pesquisar por filme ou gênero..."
+          className="w-full rounded-lg border border-border bg-surface px-4 py-3 text-sm outline-none focus:border-primary"
+        />
+      </div>
+
+      {/* Filtros */}
+      <div className="flex flex-wrap gap-2">
+        {filterOptions.map((filter) => (
           <button
-            onClick={() => handleActiveList('catalog')}
-            className={`rounded-lg px-4 py-2 text-sm font-semibold transition ${
-              activeList === 'catalog'
+            key={filter.id}
+            type="button"
+            onClick={() => handleFilter(filter.id)}
+            aria-pressed={statusFilter === filter.id}
+            className={`rounded-lg px-3 py-2 text-sm transition ${
+              statusFilter === filter.id
                 ? 'bg-primary text-background'
                 : 'border border-border text-muted hover:text-foreground'
             }`}
           >
-            🎬 Catálogo de filmes
+            {filter.label}
           </button>
+        ))}
+      </div>
 
-          <button
-            onClick={() => handleActiveList('myList')}
-            className={`rounded-lg px-4 py-2 text-sm font-semibold transition ${
-              activeList === 'myList'
-                ? 'bg-primary text-background'
-                : 'border border-border text-muted hover:text-foreground'
-            }`}
-          >
-            🍿 Minha lista
-          </button>
-        </div>
+      <p className="mt-3 text-sm text-muted" aria-live="polite">
+        {totalResults} de {movies.length} filmes
+      </p>
 
-        {/* Campo de pesquisa */}
-        <div className="py-4">
-          <label htmlFor="movie-search" className="sr-only">
-            Buscar filmes por nome ou gênero
-          </label>
-          <input
-            id="movie-search"
-            type="text"
-            value={search}
-            onChange={handleSearch}
-            placeholder="Pesquisar por filme ou gênero..."
-            className="w-full rounded-lg border border-border bg-surface px-4 py-3 text-sm outline-none focus:border-primary"
-          />
-        </div>
-
-        {/* Filtros */}
-        <div className="flex flex-wrap gap-2">
-          {filterOptions.map((filter) => (
-            <button
-              key={filter.id}
-              type="button"
-              onClick={() => handleFilter(filter.id)}
-              aria-pressed={statusFilter === filter.id}
-              className={`rounded-lg px-3 py-2 text-sm transition ${
-                statusFilter === filter.id
-                  ? 'bg-primary text-background'
-                  : 'border border-border text-muted hover:text-foreground'
-              }`}
-            >
-              {filter.label}
-            </button>
-          ))}
-        </div>
-
-        <p className="mt-3 text-sm text-muted" aria-live="polite">
-          {totalResults} de {movies.length} filmes
-        </p>
-
-        {/* Lista de filmes */}
-        <div className="mt-4">
-          {currentMovies.length > 0 ? (
-            <ul>
-              {currentMovies.map((movie) => (
-                <ListItem
-                  key={movie.id}
-                  title={movie.title}
-                  year={movie.year}
-                  genre={movie.genre}
-                  isWatched={movie.isWatched}
-                  isFavorite={movie.isFavorite}
-                />
-              ))}
-            </ul>
-          ) : (
-            <p className="py-8 text-center text-sm text-muted">
-              Nenhum filme encontrado.
-            </p>
-          )}
-        </div>
-
-        {/* Paginação */}
-        {totalPages > 1 && (
-          <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
-            <p className="text-sm text-muted">
-              Página {currentPage} de {totalPages}
-              {' · '}
-              {totalResults} filmes
-            </p>
-
-            <div className="flex gap-2">
-              <button
-                onClick={() => changePage(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="rounded-lg border border-border px-3 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-40"
-              >
-                Anterior
-              </button>
-
-              <button
-                onClick={() => changePage(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className="rounded-lg border border-border px-3 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-40"
-              >
-                Próxima
-              </button>
-            </div>
-          </div>
+      {/* Lista de filmes */}
+      <div className="mt-4">
+        {currentMovies.length > 0 ? (
+          <ul>
+            {currentMovies.map((movie) => (
+              <ListItem
+                key={movie.id}
+                title={movie.title}
+                year={movie.year}
+                genre={movie.genre}
+                isWatched={movie.isWatched}
+                isFavorite={movie.isFavorite}
+              />
+            ))}
+          </ul>
+        ) : (
+          <p className="py-8 text-center text-sm text-muted">
+            Nenhum filme encontrado.
+          </p>
         )}
-      </Panel>
+      </div>
+
+      {/* Paginação */}
+      {totalPages > 1 && (
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
+          <p className="text-sm text-muted">
+            Página {currentPage} de {totalPages}
+            {' · '}
+            {totalResults} filmes
+          </p>
+
+          <div className="flex gap-2">
+            <button
+              onClick={() => changePage(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="rounded-lg border border-border px-3 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              Anterior
+            </button>
+
+            <button
+              onClick={() => changePage(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="rounded-lg border border-border px-3 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              Próxima
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Restaurar filmes originais */}
+      <div className="mt-6 border-t border-border pt-4">
+        <button
+          type="button"
+          onClick={handleResetMovies}
+          className="rounded-lg border border-danger px-4 py-2 text-sm font-semibold text-danger transition hover:bg-danger hover:text-background"
+        >
+          Restaurar filmes originais
+        </button>
+      </div>
+    </Panel>
   );
 }
 

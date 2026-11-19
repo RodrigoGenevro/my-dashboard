@@ -6,8 +6,10 @@ import InfoRow from '../components/InfoRow.jsx';
 import StatusBadge from '../components/StatusBadge.jsx';
 import DetailsToggle from '../components/DetailsToggle.jsx';
 import ListItem from '../components/ListItem.jsx';
+import { useMovies } from '../context/MoviesContext.js';
 
-function DashboardPage({ movies }) {
+function DashboardPage() {
+  const { movies } = useMovies();
   const totalMovies = movies.length;
 
   const watchedCount = movies.filter((movie) => movie.isWatched).length;
@@ -69,11 +71,7 @@ function DashboardPage({ movies }) {
       </Panel>
 
       {/* Filme em destaque */}
-      <Panel
-        id="highlight"
-        title="Filme em destaque"
-        className="md:col-span-2"
-      >
+      <Panel id="highlight" title="Filme em destaque" className="md:col-span-2">
         {featuredMovie && (
           <div className="flex flex-col gap-4">
             <div className="flex flex-wrap items-center gap-2">
