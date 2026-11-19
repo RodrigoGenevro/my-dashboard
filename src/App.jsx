@@ -5,6 +5,7 @@ import Header from './components/Header.jsx';
 import Menu from './components/Menu.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
 import ListPage from './pages/ListPage.jsx';
+import NotFoundPage from './pages/NotFoundPage.jsx';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<DashboardPage />} />
           <Route path="/lista" element={<ListPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
 

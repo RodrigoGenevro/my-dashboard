@@ -1,17 +1,15 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import SummaryCard from '../components/SummaryCard.jsx';
 import Panel from '../components/Panel.jsx';
 import InfoRow from '../components/InfoRow.jsx';
 import StatusBadge from '../components/StatusBadge.jsx';
+import DetailsToggle from '../components/DetailsToggle.jsx';
 import ListItem from '../components/ListItem.jsx';
 
 import { movies } from '../data/movies.js';
 
 function DashboardPage() {
-  const [showDetails, setShowDetails] = useState(false);
-
   const totalMovies = movies.length;
 
   const watchedCount = movies.filter((movie) => movie.isWatched).length;
@@ -105,34 +103,21 @@ function DashboardPage() {
               pode guardar a chave para o futuro da humanidade.
             </p>
 
-            {/* Botão de detalhes */}
-            <button
-              type="button"
-              onClick={() => setShowDetails(!showDetails)}
-              className="w-fit text-sm font-semibold text-primary hover:underline"
-            >
-              {showDetails ? 'Ocultar detalhes' : 'Ver detalhes'}
-            </button>
-
-            {showDetails && (
-              <div className="flex flex-col gap-2 border-t border-border pt-4">
-                <InfoRow label="Título" value={featuredMovie.title} />
-                <InfoRow label="Ano" value={featuredMovie.year} />
-                <InfoRow label="Gênero" value={featuredMovie.genre} />
-
-                <InfoRow
-                  label="Status"
-                  value={
-                    featuredMovie.isWatched ? 'Assistido' : 'Para assistir'
-                  }
-                />
-
-                <InfoRow
-                  label="Favorito"
-                  value={featuredMovie.isFavorite ? 'Sim' : 'Não'}
-                />
-              </div>
-            )}
+            <DetailsToggle>
+              <p>
+                <strong>Diretor:</strong> Albert Hughes e Allen Hughes
+              </p>
+              <p>
+                <strong>Elenco:</strong> Denzel Washington, Gary Oldman e Mila
+                Kunis
+              </p>
+              <p>
+                <strong>Idioma original:</strong> Inglês
+              </p>
+              <p>
+                <strong>Nota no IMDb:</strong> 6,8/10
+              </p>
+            </DetailsToggle>
           </div>
         )}
       </Panel>
